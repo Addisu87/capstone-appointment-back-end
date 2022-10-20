@@ -1,24 +1,100 @@
-# README
+# Capstone_Appointment_back_end
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> This application is developed using Ruby on Rails(RoR) CRUD capabilities. It allows users to create motorcycles and appointments to purchase and post them in a web interface. This app uses RoR, RSPec, Capybara, Devise, and CanCanCan.
 
-Things you may want to cover:
+## Built With
 
-* Ruby version
+- Ruby On Rails (RoR)
+- PostegreSQL
+- RSpec
+- Capybara
+- Devise
+- CanCanCan
+- Bullet
 
-* System dependencies
+## Live Demo (if available)
 
-* Configuration
+[Live Demo Link]()
 
-* Database creation
+## Getting Started
 
-* Database initialization
+To get a local copy up and running follow these simple example steps.
 
-* How to run the test suite
+### Prerequisites
 
-* Services (job queues, cache servers, search engines, etc.)
+- Ruby 3.1.2 or newer
+- Rails 7.0.4 or newer
+- Git
+- NPM
+- PostgreSQL
+- Modern web browser
 
-* Deployment instructions
+### Setup
 
-* ...
+git clone git@github.com:Addisu87/capstone-appointment-back-end.git
+cd capstone-appointment-back-end/
+
+### Install
+
+bundle install
+npm install
+
+### Usage
+
+#### Create the database
+
+rails db:create
+
+#### Generate Schema
+
+- To push the migration into the database
+  rails db:migrate
+- To push the seed into the database
+  rails db:seed
+
+#### Starting up the web-server
+
+rails server
+
+### Testing
+
+rspec --format documentation
+
+### Deployment
+
+Heroku
+
+## Authors
+
+👤 **Addisu Haile**
+
+- GitHub: [![GitHub Badge](https://img.shields.io/badge/-Addisu87-white?logo=GitHub&logoColor=181717&style=plastic)](https://github.com/Addisu87)
+- Twitter: [![Twitter Badge](https://img.shields.io/badge/-AddisuTedla-white?logo=Twitter&logoColor=1DA1F2&style=plastic)](https://twitter.com/AddisuTedla)
+- LinkedIn: [![LinkedIn Badge](https://img.shields.io/badge/-addisu_tedla-white?logo=LinkedIn&logoColor=1DA1F2&style=plastic)](https://linkedin.com/in/addisu-tedla/)
+
+👤 **Menanya Morris**
+
+- GitHub: [![GitHub Badge](https://img.shields.io/badge/-Emmykage-white?logo=GitHub&logoColor=181717&style=plastic)](https://github.com/Emmykage)
+- Twitter: [![Twitter Badge](https://img.shields.io/badge/-mennydev-white?logo=Twitter&logoColor=1DA1F2&style=plastic)](https://twitter.com/mennydev)
+- LinkedIn: [![LinkedIn Badge](https://img.shields.io/badge/-morris_menanya-white?logo=LinkedIn&logoColor=1DA1F2&style=plastic)](https://www.linkedin.com/in/morris-menanya)
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](../../issues/).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## Acknowledgments
+
+- Original design idea by Gregoire Vella on Behance
+- My supportive family 😊
+- Microverse
+- Hat tip to anyone whose code was used
+
+## 📝 License
+
+This project is [MIT](./LICENSE) licensed.
