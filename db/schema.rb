@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_073826) do
   create_table "motorcycles", force: :cascade do |t|
     t.string "model"
     t.integer "duration"
+    t.text "description"
     t.integer "price"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
