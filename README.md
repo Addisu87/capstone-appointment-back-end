@@ -72,6 +72,12 @@ Heroku
 - Twitter: [![Twitter Badge](https://img.shields.io/badge/-AddisuTedla-white?logo=Twitter&logoColor=1DA1F2&style=plastic)](https://twitter.com/AddisuTedla)
 - LinkedIn: [![LinkedIn Badge](https://img.shields.io/badge/-addisu_tedla-white?logo=LinkedIn&logoColor=1DA1F2&style=plastic)](https://linkedin.com/in/addisu-tedla/)
 
+👤 **Isaac Pitwa**
+
+- GitHub: [![GitHub Badge](https://img.shields.io/badge/-isaacpitwa-white?logo=GitHub&logoColor=181717&style=plastic)](https://github.com/isaacpitwa)
+- Twitter: [![Twitter Badge](https://img.shields.io/badge/-isaacpitwa-white?logo=Twitter&logoColor=1DA1F2&style=plastic)](https://twitter.com/isaacpitwa)
+- LinkedIn: [![LinkedIn Badge](https://img.shields.io/badge/-isaac_pitwa-white?logo=LinkedIn&logoColor=1DA1F2&style=plastic)](https://www.linkedin.com/in/isaac-pitwa/)
+
 👤 **Menanya Morris**
 
 - GitHub: [![GitHub Badge](https://img.shields.io/badge/-Emmykage-white?logo=GitHub&logoColor=181717&style=plastic)](https://github.com/Emmykage)
