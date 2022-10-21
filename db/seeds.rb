@@ -9,7 +9,7 @@
 
 # user
 User.create(
-  name: 'admin',
+  name: 'admin'
 )
 
 # motorcycles
