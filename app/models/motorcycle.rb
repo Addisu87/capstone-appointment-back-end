@@ -1,6 +1,8 @@
 class Motorcycle < ApplicationRecord
   belongs_to :user
 
+  has_one_attached :avatar, dependent: :destroy
+
   validates :model, presence: true
   validates :duration, presence: true, numericality: { greater_than: 0 }
   validates :description, presence: true,

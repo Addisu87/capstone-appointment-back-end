@@ -6,6 +6,12 @@ class Api::V1::MotorcyclesController < ApplicationController
   # GET /motorcycles or /motorcycles.json
   def index
     @motorcycles = Motorcycle.where(user_id: current_user.id).order(created_at: :desc)
+
+    if @motorcycles.size.positive?
+      render json: @motorcycles
+    else
+      render json: { errors: 'Motorcycles not found' }, status: :not_found
+    end
   end
 
   # GET /motorcycles/1 or /motorcycles/1.json
@@ -30,10 +36,8 @@ class Api::V1::MotorcyclesController < ApplicationController
 
     respond_to do |format|
       if @motorcycle.save
-        format.html { redirect_to api_v1_motorcycles_url(@motorcycle), notice: 'Motorcycle was successfully created.' }
         format.json { render :show, status: :created, location: @motorcycle }
       else
-        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @motorcycle.errors, status: :unprocessable_entity }
       end
     end
@@ -44,10 +48,8 @@ class Api::V1::MotorcyclesController < ApplicationController
     set_motorcycle
     respond_to do |format|
       if @motorcycle.update(motorcycle_params)
-        format.html { redirect_to api_v1_motorcycle_url(@motorcycle), notice: 'Motorcycle was successfully updated.' }
         format.json { render :show, status: :ok, location: @motorcycle }
       else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @motorcycle.errors, status: :unprocessable_entity }
       end
     end
@@ -59,7 +61,6 @@ class Api::V1::MotorcyclesController < ApplicationController
     @motorcycle.destroy
 
     respond_to do |format|
-      format.html { redirect_to api_v1_motorcycle_url, notice: 'Motorcycle was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -73,6 +74,6 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def motorcycle_params
-    params.require(:motorcycle).permit(:model, :duration, :description, :price)
+    params.require(:motorcycle).permit(:model, :duration, :description, :price, :avatar)
   end
 end

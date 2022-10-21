@@ -6,6 +6,12 @@ class Api::V1::ReservationsController < ApplicationController
   # GET /reservations or /reservations.json
   def index
     @reservations = Reservation.where(user_id: current_user.id).order(created_at: :desc)
+
+    if @reservations.size.positive?
+      render json: @reservations
+    else
+      render json: { errors: 'Reservations not found' }, status: :not_found
+    end
   end
 
   # GET /reservations/1 or /reservations/1.json
@@ -30,12 +36,8 @@ class Api::V1::ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.save
-        format.html do
-          redirect_to api_v1_reservations_url(@reservation), notice: 'Reservation was successfully created.'
-        end
         format.json { render :show, status: :created, location: @reservation }
       else
-        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end
@@ -46,12 +48,8 @@ class Api::V1::ReservationsController < ApplicationController
     set_reservation
     respond_to do |format|
       if @reservation.update(reservation_params)
-        format.html do
-          redirect_to api_v1_reservation_url(@reservation), notice: 'Reservation was successfully updated.'
-        end
         format.json { render :show, status: :ok, location: @reservation }
       else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +61,6 @@ class Api::V1::ReservationsController < ApplicationController
     @reservation.destroy
 
     respond_to do |format|
-      format.html { redirect_to api_v1_reservation_url, notice: 'Reservation was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
