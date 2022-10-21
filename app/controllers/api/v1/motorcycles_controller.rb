@@ -5,7 +5,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # GET /motorcycles or /motorcycles.json
   def index
-    @motorcycles = Motorcycle.where(user_id: current_user.id).order(created_at: :desc)
+    @motorcycles = Motorcycle.all
 
     if @motorcycles.size.positive?
       render json: @motorcycles

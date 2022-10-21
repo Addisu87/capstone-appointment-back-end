@@ -5,7 +5,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations or /reservations.json
   def index
-    @reservations = Reservation.where(user_id: current_user.id).order(created_at: :desc)
+    @reservations = Reservation.all
 
     if @reservations.size.positive?
       render json: @reservations
