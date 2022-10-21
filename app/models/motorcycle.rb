@@ -3,6 +3,7 @@ class Motorcycle < ApplicationRecord
 
   has_one_attached :avatar, dependent: :destroy
 
+  # addiing validation for attributes
   validates :model, presence: true
   validates :duration, presence: true, numericality: { greater_than: 0 }
   validates :description, presence: true,

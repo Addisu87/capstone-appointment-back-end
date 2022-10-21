@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:create]
+  before_action :find_user, only: %i[show update destory]
   load_and_authorize_resource
 
   # GET /users or /users.json
@@ -9,7 +11,6 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-    set_user
     render json: @users, status: :ok
   end
 
@@ -20,7 +21,7 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    set_user
+    find_user
   end
 
   # POST /users or /users.json
@@ -38,7 +39,7 @@ class Api::V1::UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    set_user
+    find_user
     respond_to do |format|
       if @user.update(user_params)
         format.json { render :show, status: :ok, location: @user }
@@ -50,7 +51,7 @@ class Api::V1::UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    set_user
+    find_user
     @user.destroy
 
     respond_to do |format|
@@ -61,7 +62,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_user
+  def find_user
     @user = User.find(params[:id])
   end
 

@@ -9,7 +9,7 @@
 
 # user
 User.create(
-  name: 'Addisu',
+  name: 'admin',
 )
 
 # motorcycles
@@ -21,7 +21,7 @@ Motorcycle.create(
   description: 'The Neiman Marcus Limited Edition Fighter is an exclusive streetfighter motorcycle by the American Luxury Department Store Brand. It draws its power from an air-cooled V-Twin engine that propels it to a top speed of 300 km/h making it one of the fastest bikes in the world.')
 
 Motorcycle.create(
-  modle: 'Ecosse ES1 Spirit',
+  model: 'Ecosse ES1 Spirit',
   avatar: 'https://cdn.wealthygorilla.com/wp-content/uploads/2019/06/Most-Expensive-Motorbikes-Ecosse-ES1-Spirit.webp',
   duration: 50,
   price: 7000000,
