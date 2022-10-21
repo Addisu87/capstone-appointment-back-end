@@ -7,7 +7,9 @@ class Api::V1::UsersController < ApplicationController
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    set_user
+  end
 
   # GET /users/new
   def new
@@ -15,7 +17,9 @@ class Api::V1::UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit; end
+  def edit
+    set_user
+  end
 
   # POST /users or /users.json
   def create
@@ -34,6 +38,7 @@ class Api::V1::UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+    set_user
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to api_v1_user_url(@user), notice: 'User was successfully updated.' }
@@ -47,6 +52,7 @@ class Api::V1::UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    set_user
     @user.destroy
 
     respond_to do |format|

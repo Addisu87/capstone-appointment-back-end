@@ -55,6 +55,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # DELETE /motorcycles/1 or /motorcycles/1.json
   def destroy
+    set_motorcycle
     @motorcycle.destroy
 
     respond_to do |format|

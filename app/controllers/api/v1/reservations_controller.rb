@@ -59,10 +59,11 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /reservations/1 or /reservations/1.json
   def destroy
+    set_reservation
     @reservation.destroy
 
     respond_to do |format|
-      format.html { redirect_to api_v1_reservation_url, notice: 'reservation was successfully destroyed.' }
+      format.html { redirect_to api_v1_reservation_url, notice: 'Reservation was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
