@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   namespace :api do
     namespace :v1 do
-      resources :users
-      post '/auth/login', to: 'authentication#login'
+      resources :users, only:[:create]
+      post '/login', to: 'auth/#create'
+      get '/index', to: 'users/#index'
       resources :motorcycles
       resources :reservations
     end

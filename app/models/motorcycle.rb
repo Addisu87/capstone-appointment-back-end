@@ -1,6 +1,6 @@
 class Motorcycle < ApplicationRecord
   belongs_to :user
-
+  has_many :reservations, dependent: :destroy
   has_one_attached :avatar, dependent: :destroy
 
   # addiing validation for attributes
@@ -9,4 +9,8 @@ class Motorcycle < ApplicationRecord
   validates :description, presence: true,
                           length: { in: 1..5_000, too_long: '%<count>s characters is the maximum allowed' }
   validates :price, presence: true, numericality: { greater_than: 0 }
+
+  def avatar_url
+    Rails.application.routes.url_helpers.url_for(avatar)
+  end
 end

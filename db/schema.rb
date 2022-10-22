@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_061222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "remember_created_at"
-    t.index ["name"], name: "index_users_on_name"
+    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
   add_foreign_key "motorcycles", "users"

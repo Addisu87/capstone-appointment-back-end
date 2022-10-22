@@ -1,11 +1,11 @@
 class Api::V1::MotorcyclesController < ApplicationController
-  before_action :set_motorcycle, only: %i[show edit update destroy]
+  skip_before_action :find_motorcycle, only: %i[show edit update destroy]
   before_action :authenticate_user!
   load_and_authorize_resource
 
   # GET /motorcycles or /motorcycles.json
   def index
-    @motorcycles = Motorcycle.all
+    @motorcycles = Motorcycle.all.to_json(include: [:avatar])
 
     if @motorcycles.size.positive?
       render json: @motorcycles
@@ -16,7 +16,11 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # GET /motorcycles/1 or /motorcycles/1.json
   def show
-    set_motorcycle
+    @result = []
+    @motorcycle = Motorcycle.find(params[:id])
+    @result.push(@motorcycle.as_json.merge({ avatar: url_for(@motorcycle.avatar) }))
+
+    render json: @result
   end
 
   # GET /motorcycles/new
@@ -26,7 +30,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # GET /motorcycles/1/edit
   def edit
-    set_motorcycle
+    find_motorcycle
   end
 
   # POST /motorcycles or /motorcycles.json
@@ -45,7 +49,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # PATCH/PUT /motorcycles/1 or /motorcycles/1.json
   def update
-    set_motorcycle
+    find_motorcycle
     respond_to do |format|
       if @motorcycle.update(motorcycle_params)
         format.json { render :show, status: :ok, location: @motorcycle }
@@ -57,7 +61,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # DELETE /motorcycles/1 or /motorcycles/1.json
   def destroy
-    set_motorcycle
+    find_motorcycle
     @motorcycle.destroy
 
     respond_to do |format|
@@ -68,7 +72,7 @@ class Api::V1::MotorcyclesController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_motorcycle
+  def find_motorcycle
     @motorcycle = Motorcycle.find(params[:id])
   end
 

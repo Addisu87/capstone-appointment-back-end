@@ -8,8 +8,18 @@ class User < ApplicationRecord
   has_many :motorcycles, foreign_key: 'user_id', dependent: :destroy
   has_many :reservations, foreign_key: 'user_id', dependent: :destroy
 
-  has_secure_token
   # addiing validation for attributes
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+
+  has_secure_token
+  attr_accessor :name
+
+  def authenticate(name)
+    if BCrypt::Name.new(name_digest) == name
+      self
+    else
+      false
+    end
+  end
 end

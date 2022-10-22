@@ -1,20 +1,38 @@
 class ApplicationController < ActionController::API
-  include JwtToken
-
-  before_action :authenticate_user!
   before_action :update_allowed_parameters, if: :devise_controller?
 
-  private
+  def encode_token(payload)
+    JWT.encode(payload, 'my_s3cr3t')
+  end
 
-  def authenticate_user
-    header = request.headers['Authorization']
-    header = header.chars.last if header
+  def auth_header
+    request.headers['Authorization']
+  end
+
+  def decoded_token
+    return unless auth_header
+
+    token = auth_header.chars[1]
     begin
-      @decoded = JwtToken.decode(header)
-      @current_user = User.find(@decoded[:user_id])
-    rescue ActiveRecord::RecordNotFound && JWT::DecodeError => e
-      render json: { errors: e.message }, status: :unauthorized
+      JWT.decode(token, 'my_s3cr3t', true, algorithm: 'HS256')
+    rescue JWT::DecodeError
+      nil
     end
+  end
+
+  def current_user
+    return unless decoded_token
+
+    user_id = decoded_token[0]['user_id']
+    @user = User.find_by(id: user_id)
+  end
+
+  def loggin_in?
+    !!current_user
+  end
+
+  def authorized?
+    render json: { message: 'Please log in' }, status: unauthorized unless logged_in?
   end
 
   protected

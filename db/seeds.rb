@@ -9,7 +9,11 @@
 
 # user
 User.create(
-  name: 'admin'
+  user_id: 1,
+  name: 'addisu',
+  role: 'admin',
+  created_at: Time.now,
+  updated_at: Time.now
 )
 
 # motorcycles

@@ -1,14 +1,14 @@
 class Api::V1::ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[show edit update destroy]
+  skip_before_action :find_reservation, only: %i[show edit update destroy]
   before_action :authenticate_user!
   load_and_authorize_resource
 
   # GET /reservations or /reservations.json
   def index
-    @reservations = Reservation.all
+    @reservations = current_user.reservations.includes(:motorcycle)
 
     if @reservations.size.positive?
-      render json: @reservations
+      render json: @reservations, include: [:motorcycle], status: :ok
     else
       render json: { errors: 'Reservations not found' }, status: :not_found
     end
@@ -16,7 +16,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/1 or /reservations/1.json
   def show
-    set_reservation
+    find_reservation
   end
 
   # GET /reservations/new
@@ -26,11 +26,12 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/1/edit
   def edit
-    set_reservation
+    find_reservation
   end
 
   # POST /reservations or /reservations.json
   def create
+    find_reservation
     @reservation = Reservation.new(reservation_params)
     @reservation.user_id = current_user.id
 
@@ -45,7 +46,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # PATCH/PUT /reservations/1 or /reservations/1.json
   def update
-    set_reservation
+    find_reservation
     respond_to do |format|
       if @reservation.update(reservation_params)
         format.json { render :show, status: :ok, location: @reservation }
@@ -57,7 +58,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /reservations/1 or /reservations/1.json
   def destroy
-    set_reservation
+    find_reservation
     @reservation.destroy
 
     respond_to do |format|
@@ -68,7 +69,7 @@ class Api::V1::ReservationsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_reservation
+  def find_reservation
     @reservation = Reservation.find(params[:id])
   end
 
