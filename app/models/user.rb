@@ -11,14 +11,5 @@ class User < ApplicationRecord
   # addiing validation for attributes
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-  has_secure_password
-  attr_accessor :name
-
-  def authenticate(name)
-    if BCrypt::Password.new(name_digest) == name
-      self
-    else
-      false
-    end
-  end
+  has_secure_token
 end
