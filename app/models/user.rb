@@ -11,5 +11,5 @@ class User < ApplicationRecord
   has_secure_token
   # addiing validation for attributes
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 end
