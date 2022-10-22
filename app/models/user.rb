@@ -9,14 +9,13 @@ class User < ApplicationRecord
   has_many :reservations, foreign_key: 'user_id', dependent: :destroy
 
   # addiing validation for attributes
-
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-  has_secure_token
+  has_secure_password
   attr_accessor :name
 
   def authenticate(name)
-    if BCrypt::Name.new(name_digest) == name
+    if BCrypt::Password.new(name_digest) == name
       self
     else
       false
