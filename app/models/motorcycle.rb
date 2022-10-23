@@ -15,7 +15,7 @@ class Motorcycle < ApplicationRecord
     return unless object.avatar.attached?
 
     {
-      avatar_url: rails_blob_path(object.avatar)
+      url: rails_blob_path(object.avatar, only_path: true)
     }
   end
 end
