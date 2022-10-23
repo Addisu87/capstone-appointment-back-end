@@ -8,35 +8,31 @@ class Api::V1::UsersController < ApplicationController
     render json: { user: UserSerializer.new(current_user) }, status: :accepted
   end
 
-  # GET /users/1 or /users/1.json
-  def show
-    render json: @users, status: :ok
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-    set_user
-  end
-
-  # POST /users or /users.json
   def create
-    @user = User.new(name: params[:name], role: params[:role], password: params[:password])
+    @user = User.create(user_params)
+    # @user = User.new(name: params[:name], role: params[:role], password: params[:password])
+
     if @user.save
-      @token = encode_token({ user_id: @user.id })
-      render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
+      token = encode_token({ user_id: @user.id })
+      render json: { user: @user, token: }, status: :ok
     else
-      render json: { error: 'Failed to create user' }, status: :unprocessable_entity
+      render json: { error: 'Invalid name or password' }, status: :unprocessable_entity
+    end
+  end
+
+  def login
+    @user = User.find_by(name: params[:name])
+    if @user&.authenticate(params[:password])
+      token = encode_token({ user_id: @user.id })
+      render json: { user: @user, token: }, status: :ok
+    else
+      render json: { error: 'Invalid name or password' }, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    find_user
+    set_user
     respond_to do |format|
       if @user.update(user_params)
         format.json { render :show, status: :ok, location: @user }
@@ -48,7 +44,7 @@ class Api::V1::UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    find_user
+    set_user
     @user.destroy
 
     respond_to do |format|
@@ -65,6 +61,7 @@ class Api::V1::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:name)
+    params.permit(:name, :password)
+    # params.require(:user).permit(:username, :password)
   end
 end

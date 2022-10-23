@@ -1,6 +1,6 @@
 class Api::V1::MotorcyclesController < ApplicationController
   skip_before_action :set_motorcycle, only: %i[show edit update destroy]
-  before_action :authorized
+  before_action :authorize
   load_and_authorize_resource
 
   # GET /motorcycles or /motorcycles.json
@@ -36,7 +36,6 @@ class Api::V1::MotorcyclesController < ApplicationController
   # POST /motorcycles or /motorcycles.json
   def create
     @motorcycle = Motorcycle.new(motorcycle_params.merge(user: @user))
-    @motorcycle.user_id = current_user.id
 
     respond_to do |format|
       if @motorcycle.save

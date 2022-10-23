@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only:[:create]
-      post '/login', to: 'auth#login'
       post '/create', to: 'users#create'
+      post "/login", to: "users#login"
       get '/index', to: 'users#index'
       resources :motorcycles
       resources :reservations
