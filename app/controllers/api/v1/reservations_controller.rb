@@ -16,7 +16,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/1 or /reservations/1.json
   def show
-    find_reservation
+    set_reservation
   end
 
   # GET /reservations/new
@@ -26,13 +26,13 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/1/edit
   def edit
-    find_reservation
+    set_reservation
   end
 
   # POST /reservations or /reservations.json
   def create
-    find_reservation
-    @reservation = Reservation.new(reservation_params)
+    set_reservation
+    @reservation = Reservation.new(reservation_params.merge(user: @user))
     @reservation.user_id = current_user.id
 
     respond_to do |format|
@@ -46,7 +46,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # PATCH/PUT /reservations/1 or /reservations/1.json
   def update
-    find_reservation
+    set_reservation
     respond_to do |format|
       if @reservation.update(reservation_params)
         format.json { render :show, status: :ok, location: @reservation }
@@ -58,7 +58,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /reservations/1 or /reservations/1.json
   def destroy
-    find_reservation
+    set_reservation
     @reservation.destroy
 
     respond_to do |format|
@@ -69,8 +69,8 @@ class Api::V1::ReservationsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def find_reservation
-    @reservation = Reservation.find(params[:id])
+  def set_reservation
+    @reservation = @user.reservations.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

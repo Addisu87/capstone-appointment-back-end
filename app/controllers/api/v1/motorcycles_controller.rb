@@ -1,5 +1,5 @@
 class Api::V1::MotorcyclesController < ApplicationController
-  skip_before_action :find_motorcycle, only: %i[show edit update destroy]
+  skip_before_action :set_motorcycle, only: %i[show edit update destroy]
   before_action :authorized
   load_and_authorize_resource
 
@@ -30,12 +30,12 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # GET /motorcycles/1/edit
   def edit
-    find_motorcycle
+    set_motorcycle
   end
 
   # POST /motorcycles or /motorcycles.json
   def create
-    @motorcycle = Motorcycle.new(motorcycle_params)
+    @motorcycle = Motorcycle.new(motorcycle_params.merge(user: @user))
     @motorcycle.user_id = current_user.id
 
     respond_to do |format|
@@ -49,7 +49,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # PATCH/PUT /motorcycles/1 or /motorcycles/1.json
   def update
-    find_motorcycle
+    set_motorcycle
     respond_to do |format|
       if @motorcycle.update(motorcycle_params)
         format.json { render :show, status: :ok, location: @motorcycle }
@@ -61,7 +61,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # DELETE /motorcycles/1 or /motorcycles/1.json
   def destroy
-    find_motorcycle
+    set_motorcycle
     @motorcycle.destroy
 
     respond_to do |format|
@@ -72,8 +72,8 @@ class Api::V1::MotorcyclesController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def find_motorcycle
-    @motorcycle = Motorcycle.find(params[:id])
+  def set_motorcycle
+    @motorcycle = @user.motorcycles.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
