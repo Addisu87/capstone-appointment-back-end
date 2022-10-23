@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :authorized, only: [:create]
-  before_action :find_user, only: %i[show update destory]
-  load_and_authorize_resource
+  # skip_before_action :authorized, only: [:create]
+  # before_action :set_user, only: %i[show update destory]
+  # load_and_authorize_resource
 
   # GET /users or /users.json
   def index
@@ -20,13 +20,13 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    find_user
+    set_user
   end
 
   # POST /users or /users.json
   def create
-    @user = User.create(user_params)
-    if @user.valid?
+    @user = User.new(name: params[:name], role: params[:role], password: params[:password])
+    if @user.save
       @token = encode_token({ user_id: @user.id })
       render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
     else
@@ -59,7 +59,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def find_user
+  def set_user
     @user = User.find(params[:id])
   end
 

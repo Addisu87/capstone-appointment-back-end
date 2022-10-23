@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::API
-  before_action :authorized
-  before_action :update_allowed_parameters, if: :devise_controller?
+  # before_action :authorized
+  # before_action :update_allowed_parameters, if: :devise_controller?
 
   def encode_token(payload)
     # should store secret in env variable
-    JWT.encode(payload, 'secret')
+    JWT.encode({ payload:, exp: 60.days.from_now.to_i }, 'secret')
   end
 
   def decoded_token
