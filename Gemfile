@@ -13,7 +13,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 
 # Gem CanCanCan for authorization handling
-gem 'cancancan'
+# gem 'cancancan'
 
 # Devise for authentication
 gem 'devise'

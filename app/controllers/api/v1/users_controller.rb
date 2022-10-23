@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :authorized, only: [:create], raise: false
+  skip_before_action :authorized, only: [:create]
   before_action :find_user, only: %i[show update destory]
   load_and_authorize_resource
 
