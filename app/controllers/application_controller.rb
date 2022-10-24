@@ -1,13 +1,4 @@
 class ApplicationController < ActionController::API
-  before_action :update_allowed_parameters, if: :devise_controller?
-
-  protected
-
-  def update_allowed_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:name])
-  end
-
   def encode_token(payload)
     JWT.encode({ payload:, exp: 60.days.from_now.to_i }, 'secret')
   end
@@ -24,14 +15,14 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def authorized_user
+  def current_user
     return unless decoded_token
 
     user_id = decoded_token[0]['user_id']
     @user = User.find_by(id: user_id)
   end
 
-  def authorize
-    render json: { message: 'You have to log in.' }, status: :unauthorized unless authorized_user
+  def authorized
+    render json: { message: 'You have to log in.' }, status: :unauthorized unless current_user
   end
 end

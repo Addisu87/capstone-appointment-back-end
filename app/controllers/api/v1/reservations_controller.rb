@@ -1,7 +1,5 @@
 class Api::V1::ReservationsController < ApplicationController
   skip_before_action :find_reservation, only: %i[show edit update destroy]
-  before_action :authorize
-  # load_and_authorize_resource
 
   # GET /reservations or /reservations.json
   def index

@@ -41,7 +41,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_23_150016) do
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "remember_created_at"
     t.string "password_digest"
     t.index ["name"], name: "index_users_on_name", unique: true
   end
