@@ -3,14 +3,13 @@ require 'rails_helper'
 RSpec.describe Reservation, type: :model do
   @user = User.create(name: 'Addisu')
   @reservation = Reservation.new(
-    date: '2022-12-01', 
-    city: 'Gondar', 
+    date: '2022-12-01',
+    city: 'Gondar',
     motorcycle_id: 1,
     user_id: 1
   )
 
   @reservation.save
-
 
   context 'confirm the reservation city' do
     it 'not exist' do
