@@ -2,16 +2,16 @@ class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destory]
   # GET /users or /users.json
   def index
-    render json: { user: UserSerializer.new(current_user) }, status: :accepted
+    @users = User.all
+    render json: UserSerializer.new(@users)
   end
 
   def create
     @user = User.create(user_params)
-    # @user = User.new(name: params[:name], role: params[:role], password: params[:password])
 
     if @user.valid?
       token = encode_token({ user_id: @user.id })
-      render json: { user: @user, token: }, status: :ok
+      render json: @user, token:, status: :created
     else
       render json: { error: 'Invalid name or password' }, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find_by(name: user_params[:name])
     if @user&.authenticate(user_params[:password])
       token = encode_token({ user_id: @user.id })
-      render json: { user: @user, token: }, status: :ok
+      render json: @user, token:, status: :ok
     else
       render json: { error: 'Invalid name or password' }, status: :unprocessable_entity
     end
@@ -30,12 +30,10 @@ class Api::V1::UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     set_user
-    respond_to do |format|
-      if @user.update(user_params)
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      render json: @user, status: :ok, location: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
@@ -58,7 +56,6 @@ class Api::V1::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.permit(:name, :password)
-    # params.require(:user).permit(:username, :password)
+    params.require(:user).permit(:username, :password)
   end
 end
