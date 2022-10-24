@@ -1,7 +1,7 @@
 class Api::V1::MotorcyclesController < ApplicationController
   skip_before_action :set_motorcycle, only: %i[show edit update destroy]
   before_action :authorize
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   # GET /motorcycles or /motorcycles.json
   def index

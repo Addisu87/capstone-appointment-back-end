@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  # skip_before_action :authorized, only: [:create]
-  # before_action :set_user, only: %i[show update destory]
+  skip_before_action :authorize, only: [:create]
+  before_action :set_user, only: %i[show update destory]
   # load_and_authorize_resource
 
   # GET /users or /users.json
