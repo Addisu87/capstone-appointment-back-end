@@ -9,9 +9,10 @@
 
 # user
 User.create(
-  user_id: 1,
-  name: 'addisu',
+  id: 123,
+  name: 'admin',
   role: 'admin',
+  password: 'admin',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -37,13 +38,13 @@ Reservation.create(
   date: '2022-12-01',
   city: 'Gondar',
   motorcycle_id: 1,
-  user_id: 1,
+  id: 123
 );
 
 Reservation.create(
   date: '2022-12-02',
   city: 'Addis Ababa',
   motorcycle_id: 2,
-  user_id: 1,
+  id: 123
 );
 
