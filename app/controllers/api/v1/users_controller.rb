@@ -18,8 +18,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by(name: params[:name])
-    if @user&.authenticate(params[:password])
+    @user = User.find_by(name: user_params[:name])
+    if @user&.authenticate(user_params[:password])
       token = encode_token({ user_id: @user.id })
       render json: { user: @user, token: }, status: :ok
     else
