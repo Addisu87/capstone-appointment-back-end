@@ -1,9 +1,13 @@
 class Api::V1::MotorcyclesController < ApplicationController
-  skip_before_action :set_motorcycle, only: %i[show edit update destroy]
+  before_action :set_motorcycle, only: %i[show edit update destroy]
 
   # GET /motorcycles or /motorcycles.json
   def index
-    @motorcycles = Motorcycle.all.to_json(include: [:avatar])
+    # @motorcycles = @user.motorcycles.all
+    @motorcycles = []
+    Motorcycle.all.each do |motor|
+      @motorcycles.push(motor.as_json.merge({ avatar: url_for(motor.avatar) }))
+    end
 
     if @motorcycles.size.positive?
       render json: @motorcycles
@@ -35,24 +39,19 @@ class Api::V1::MotorcyclesController < ApplicationController
   def create
     @motorcycle = Motorcycle.new(motorcycle_params.merge(user: @user))
 
-    respond_to do |format|
-      if @motorcycle.save
-        format.json { render :show, status: :created, location: @motorcycle }
-      else
-        format.json { render json: @motorcycle.errors, status: :unprocessable_entity }
-      end
+    if @motorcycle.save
+      render json: @motorcycle, status: :created, location: @motorcycle
+    else
+      render json: @motorcycle.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /motorcycles/1 or /motorcycles/1.json
   def update
-    set_motorcycle
-    respond_to do |format|
-      if @motorcycle.update(motorcycle_params)
-        format.json { render :show, status: :ok, location: @motorcycle }
-      else
-        format.json { render json: @motorcycle.errors, status: :unprocessable_entity }
-      end
+    if @motorcycle.update(motorcycle_params)
+      render json: @motorcycle
+    else
+      render json: @motorcycle.errors, status: :unprocessable_entity
     end
   end
 
@@ -75,6 +74,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def motorcycle_params
-    params.require(:motorcycle).permit(:model, :duration, :description, :price, :avatar)
+    params.permit(:model, :duration, :description, :price, :avatar)
+    # params.require(:motorcycle).permit(:model, :duration, :description, :price, :avatar)
   end
 end
