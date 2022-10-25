@@ -22,7 +22,11 @@ class ApplicationController < ActionController::API
     @user = User.find_by(id: user_id)
   end
 
+  def logged_in?
+    !!current_user
+  end
+
   def authorized
-    render json: { message: 'You have to log in.' }, status: :unauthorized unless current_user
+    render json: { message: 'You have to log in.' }, status: :unauthorized unless logged_in
   end
 end
