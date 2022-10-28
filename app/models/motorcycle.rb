@@ -1,7 +1,6 @@
 class Motorcycle < ApplicationRecord
-  belongs_to :user
   has_many :reservations, dependent: :destroy
-  has_one_attached :avatar, dependent: :destroy
+  has_one_attached :image
 
   # addiing validation for attributes
   validates :model, presence: true
@@ -11,6 +10,6 @@ class Motorcycle < ApplicationRecord
   validates :price, presence: true, numericality: { greater_than: 0 }
 
   def avatar_url
-    Rails.application.routes.url_helpers.url_for(avatar)
+    Rails.application.routes.url_helpers.url_for(image)
   end
 end
