@@ -1,9 +1,5 @@
-class UserSerializer < ActiveModel::Serializer
-  include JSONAPI::Serializer
+class UserSerializer
+  include FastJsonapi::ObjectSerializer
   attributes :id, :name, :token
   has_many :motorcycles
-
-  def token
-    @instance_options[:token]
-  end
 end

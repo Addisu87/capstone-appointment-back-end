@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::API
   def encode_token(payload)
+    # should store secret in env variable
     JWT.encode({ payload:, exp: 60.days.from_now.to_i }, 'secret')
   end
 
   def authorize_request
-    header = request.headers['Authorization']
+    # { 'Authorization': 'Bearer <token>' }
+    header = request.headers['Authorization'] 
     header = header.split.last if header
+    # headers: { 'Authorization': 'Bearer <token>' }
     begin
       @decoded = JWT.decode(header)
       @current_user = User.find(@decoded[:user_id])
@@ -13,25 +16,6 @@ class ApplicationController < ActionController::API
       render json: { errors: e.message }, status: :unauthorized
     end
   end
-
-  # def decoded_token
-  #   auth_header = request.headers['Authorization']
-  #   return unless auth_header
-  #   begin
-  #     @decoded = JsonWebToken.decode(header)
-  #     @current_user = User.find(@decoded[:user_id])
-  #   rescue ActiveRecord::RecordNotFound => e
-  #     render json: { errors: e.message }, status: :unauthorized
-  #   rescue JWT::DecodeError => e
-  #     render json: { errors: e.message }, status: :unauthorized
-  #   end
-  # end
-
-  # def current_user
-  #   return unless decoded_token
-  #   user_id = decoded_token[0]['user_id']
-  #   @user = User.find_by(id: user_id)
-  # end
 
   def logged_in?
     !!current_user

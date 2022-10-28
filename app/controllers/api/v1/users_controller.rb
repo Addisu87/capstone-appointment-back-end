@@ -19,8 +19,10 @@ class Api::V1::UsersController < ApplicationController
 
   def login
     @user = User.find_by(name: user_params[:name])
+    # User#authenticate comes from BCrypt
     if @user&.authenticate(user_params[:password])
       time = Time.now + 24.hours.to_i
+      # encode token comes from ApplicationController
       token = JWT.encode({ user_id: @user.id, exp: 24.hours.to_i }, 'my_s3cr3t')
       render json: { username: @user.name, token:, exp: time.strftime('%m-%d-%Y %H:%M') }, status: :ok
     else
