@@ -42,9 +42,12 @@ class Api::V1::MotorcyclesController < ApplicationController
     @motorcycle = Motorcycle.new(motorcycle_params)
 
     if @motorcycle.save
+      p 'Motorcycle saved'
+      p @motorcycle.avatar_url
       render json: @motorcycle, status: :created, location: @motorcycle
     else
       render json: @motorcycle.errors, status: :unprocessable_entity
+      p 'Failed to save Motocycle'
     end
   end
 
