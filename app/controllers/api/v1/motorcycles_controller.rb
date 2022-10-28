@@ -37,7 +37,9 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # POST /motorcycles or /motorcycles.json
   def create
-    @motorcycle = Motorcycle.new(motorcycle_params.merge(user: @user))
+    p 'These are the params'
+    p motorcycle_params
+    @motorcycle = Motorcycle.new(motorcycle_params)
 
     if @motorcycle.save
       render json: @motorcycle, status: :created, location: @motorcycle
@@ -69,12 +71,11 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_motorcycle
-    @motorcycle = @user.motorcycles.find(params[:id])
+    @motorcycle = Motorcycle.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def motorcycle_params
     params.permit(:model, :duration, :description, :price, :avatar)
-    # params.require(:motorcycle).permit(:model, :duration, :description, :price, :avatar)
   end
 end
