@@ -1,5 +1,6 @@
 class Api::V1::MotorcyclesController < ApplicationController
   before_action :set_motorcycle, only: %i[show update destroy]
+  before_action :authorize_request, except: :create
 
   # GET /motorcycles or /motorcycles.json
   def index
