@@ -1,12 +1,11 @@
 class ApplicationController < ActionController::API
-
   def encode_token(payload)
     JWT.encode({ payload:, exp: 60.days.from_now.to_i }, 'secret')
   end
 
   def authorize_request
     header = request.headers['Authorization']
-    header = header.split(' ').last if header
+    header = header.split.last if header
     begin
       @decoded = JWT.decode(header)
       @current_user = User.find(@decoded[:user_id])
@@ -16,7 +15,6 @@ class ApplicationController < ActionController::API
       render json: { errors: e.message }, status: :unauthorized
     end
   end
-
 
   # def decoded_token
   #   auth_header = request.headers['Authorization']
@@ -30,7 +28,6 @@ class ApplicationController < ActionController::API
   #     render json: { errors: e.message }, status: :unauthorized
   #   end
   # end
-
 
   # def current_user
   #   return unless decoded_token
