@@ -1,6 +1,5 @@
 class Api::V1::MotorcyclesController < ApplicationController
-  before_action :authorize_request, except: :create
-  before_action :set_motorcycle, only: %i[show edit update destroy]
+  before_action :set_motorcycle, only: %i[show update destroy]
 
   # GET /motorcycles or /motorcycles.json
   def index
@@ -40,8 +39,7 @@ class Api::V1::MotorcyclesController < ApplicationController
   def create
     p 'These are the params'
     p motorcycle_params
-    @motorcycle = Motorcycle.new(motorcycle_params)
-
+    @motorcycle = Motorcycle.new(motorcycle_params.except(:motorcycle))
     if @motorcycle.save
       p 'Motorcycle saved'
       p @motorcycle.avatar_url
@@ -80,6 +78,6 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def motorcycle_params
-    params.permit(:model, :duration, :description, :price, :avatar)
+    params.require(:motorcycle).permit(:model, :duration, :description, :price, :avatar)
   end
 end
