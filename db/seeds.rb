@@ -22,14 +22,14 @@ Motorcycle.create(
   model: 'Neiman Marcus Limited Edition Fighter', 
   avatar:'https://cdn.wealthygorilla.com/wp-content/uploads/2019/06/Most-Expensive-Motorbikes-Neiman-Marcus-Limited-Edition-Fighter.webp',
   duration: 48,
-  price: 11_000_000,
+  price: 11000000,
   description: 'The Neiman Marcus Limited Edition Fighter is an exclusive streetfighter motorcycle by the American Luxury Department Store Brand. It draws its power from an air-cooled V-Twin engine that propels it to a top speed of 300 km/h making it one of the fastest bikes in the world.')
 
 Motorcycle.create(
   model: 'Ecosse ES1 Spirit',
   avatar: 'https://cdn.wealthygorilla.com/wp-content/uploads/2019/06/Most-Expensive-Motorbikes-Ecosse-ES1-Spirit.webp',
   duration: 50,
-  price: 7_000_000,
+  price: 7000000,
   description: 'The Ecosse Spirit is a limited edition titanium motorcycle and this bike packs enough power to satisfy even the most experienced rider, reaching speeds of 370 kilometres.'
 )
 
