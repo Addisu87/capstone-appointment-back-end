@@ -20,10 +20,11 @@ class Api::V1::UsersController < ApplicationController
   def login
     @user = User.find_by(name: user_params[:name])
     if @user&.authenticate(user_params[:password])
-      token = encode_token({ user_id: @user.id })
-      render json: @user, token:, status: :ok
+      time = Time.now + 24.hours.to_i
+      token =  JWT.encode({ user_id: @user.id,exp: 24.hours.to_i }, 'my_s3cr3t')
+      render json: {username: @user.name, token:token,exp: time.strftime("%m-%d-%Y %H:%M")}, status: :ok
     else
-      render json: { error: 'Invalid name or password' }, status: :unprocessable_entity
+      render json: { error: 'Invalid name or password' }, status: :unauthorized
     end
   end
 
