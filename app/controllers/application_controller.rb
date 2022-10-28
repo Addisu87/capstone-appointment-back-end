@@ -11,6 +11,7 @@ class ApplicationController < ActionController::API
       @current_user = User.find(@decoded[:user_id])
     rescue ActiveRecord::RecordNotFound => e
       render json: { errors: e.message }, status: :unauthorized
+    end
   end
 
   # def decoded_token
