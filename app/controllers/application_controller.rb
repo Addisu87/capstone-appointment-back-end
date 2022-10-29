@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
 
   def authorize_request
     # { 'Authorization': 'Bearer <token>' }
-    header = request.headers['Authorization'] 
+    header = request.headers['Authorization']
     header = header.split.last if header
     # headers: { 'Authorization': 'Bearer <token>' }
     begin
@@ -22,6 +22,6 @@ class ApplicationController < ActionController::API
   end
 
   def authorized
-    render json: { message: 'You have to log in.' }, status: :unauthorized unless logged_in
+    render json: { message: 'You have to log in.' }, status: :unauthorized unless logged_in?
   end
 end
