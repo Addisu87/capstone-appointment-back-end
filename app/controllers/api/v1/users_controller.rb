@@ -17,6 +17,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # Authentication users
   def login
     @user = User.find_by(name: user_params[:name])
     # User#authenticate comes from BCrypt
@@ -62,6 +63,5 @@ class Api::V1::UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.permit(:name, :password)
-    # params.require(:user).permit(:name, :password)
   end
 end
