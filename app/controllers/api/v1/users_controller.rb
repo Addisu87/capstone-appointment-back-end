@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @users = User.all
-    render json: UserSerializer.new(@users).serialized_json
+    render json: UserSerializer.new(@users)
   end
 
   def create
@@ -23,8 +23,8 @@ class Api::V1::UsersController < ApplicationController
     if @user&.authenticate(user_params[:password])
       time = Time.now + 24.hours.to_i
       # encode token comes from ApplicationController
-      token = JWT.encode({ user_id: @user.id, exp: 24.hours.to_i }, 'my_s3cr3t')
-      render json: { username: @user.name, token:, exp: time.strftime('%m-%d-%Y %H:%M') }, status: :ok
+      token = JWT.encode({ user_id: @user.id }, SECRET_KEY)
+      render json: { id: @user.id, username: @user.name, token:, exp: time.strftime('%m-%d-%Y %H:%M') }, status: :ok
     else
       render json: { error: 'Invalid name or password' }, status: :unauthorized
     end
@@ -55,6 +55,8 @@ class Api::V1::UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: 'User not found' }, status: :not_found
   end
 
   # Only allow a list of trusted parameters through.

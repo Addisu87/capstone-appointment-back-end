@@ -1,7 +1,4 @@
 class Api::V1::MotorcyclesController < ApplicationController
-  before_action :set_motorcycle, only: %i[show update destroy]
-  before_action :authorize_request, except: :create
-
   # GET /motorcycles or /motorcycles.json
   def index
     @motorcycles = []
@@ -68,7 +65,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_motorcycle
-    @motorcycle = Motorcycle.find(params[:id])
+    @motorcycle = Motorcycle.find_by_id!(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
