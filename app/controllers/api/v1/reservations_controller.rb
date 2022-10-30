@@ -1,9 +1,11 @@
 class Api::V1::ReservationsController < ApplicationController
-  before_action :authorize_request
+  before_action :set_reservation, only: %i[show update destroy]
 
   # GET /reservations or /reservations.json
   def index
-    @reservations = Reservation.all
+    # @reservations = Reservation.all
+    @reservations = @user.reservations
+
     if @reservations.size.positive?
       render json: @reservations, status: :ok
     else
@@ -28,7 +30,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # POST /reservations or /reservations.json
   def create
-    @reservation = Reservation.new(reservation_params.except(:reservation))
+    @reservation = Reservation.new(reservation_params.merge(user: @user))
 
     if @reservation.save
       render json: @reservation, status: :created
@@ -62,10 +64,11 @@ class Api::V1::ReservationsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_reservation
     @reservation = Reservation.find_by_id!(params[:id])
+    # @reservation = @user.reservations.find_by_id!(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:city, :date)
+    params.permit(:city, :date)
   end
 end
