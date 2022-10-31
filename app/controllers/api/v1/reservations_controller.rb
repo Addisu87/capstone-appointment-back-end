@@ -3,8 +3,8 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations or /reservations.json
   def index
-    # @reservations = Reservation.all
-    @reservations = @user.reservations
+    @reservations = Reservation.all.includes(:motorcycle)
+    # @reservations = @user.reservations
 
     if @reservations.size.positive?
       render json: @reservations, status: :ok
@@ -15,7 +15,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/1 or /reservations/1.json
   def show
-    set_reservation
+    render json: @reservation, status: :ok
   end
 
   # GET /reservations/new
@@ -25,12 +25,13 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/1/edit
   def edit
-    set_reservation
+    render json: @reservation, status: :ok
   end
 
   # POST /reservations or /reservations.json
   def create
-    @reservation = Reservation.new(reservation_params.merge(user: @user))
+    @reservation = Reservation.new(reservation_params)
+    # @reservation = @user.reservations.new(reservation_params)
 
     if @reservation.save
       render json: @reservation, status: :created
@@ -41,7 +42,6 @@ class Api::V1::ReservationsController < ApplicationController
 
   # PATCH/PUT /reservations/1 or /reservations/1.json
   def update
-    set_reservation
     if @reservation.update(reservation_params)
       render json: @reservation, status: :ok
     else
@@ -51,7 +51,6 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /reservations/1 or /reservations/1.json
   def destroy
-    set_reservation
     @reservation.destroy
 
     respond_to do |format|
@@ -65,10 +64,12 @@ class Api::V1::ReservationsController < ApplicationController
   def set_reservation
     @reservation = Reservation.find_by_id!(params[:id])
     # @reservation = @user.reservations.find_by_id!(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: 'Reservation not found' }, status: :unauthorized
   end
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:city, :date)
+    params.require(:reservation).permit(:city, :date, :user_id)
   end
 end
