@@ -34,7 +34,7 @@ development:
   username: postgres
 
   # The password associated with the postgres role (username).
-  # password: 1987
+  password: chemistry
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -60,6 +60,10 @@ development:
 test:
   <<: *default
   database: capstone_appointment_back_end_test
+  username: postgres
+  password: chemistry
+  host: localhost
+  port: 5432
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only:[:create]
       post '/create', to: 'users#create'
-      get '/login', to: 'users#login'
+      post '/login', to: 'users#login'
       resources :motorcycles
       resources :reservations
     end

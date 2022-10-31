@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
 
   def authorize_request
     header = request.headers['Authorization']
-    header = header.split.last if header
+    token = header.split.last if header
     begin
       JWT.decode(token, 'secret', true, algorithm: 'HS256')
     rescue JWT::DecodeError
