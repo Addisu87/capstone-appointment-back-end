@@ -34,7 +34,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # POST /motorcycles or /motorcycles.json
   def create
-    @motorcycle = Motorcycle.new(motorcycle_params.except(:motorcycle))
+    @motorcycle = Motorcycle.new(motorcycle_params)
     if @motorcycle.save
       render json: @motorcycle, status: :created
     else
