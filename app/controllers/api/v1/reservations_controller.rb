@@ -1,12 +1,13 @@
 class Api::V1::ReservationsController < ApplicationController
-  skip_before_action :find_reservation, only: %i[show edit update destroy]
+  before_action :set_reservation, only: %i[show update destroy]
 
   # GET /reservations or /reservations.json
   def index
     @reservations = Reservation.all.includes(:motorcycle)
+    # @reservations = @user.reservations
 
     if @reservations.size.positive?
-      render json: @reservations, include: [:motorcycle], status: :ok
+      render json: @reservations, status: :ok
     else
       render json: { errors: 'Reservations not found' }, status: :not_found
     end
@@ -14,7 +15,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/1 or /reservations/1.json
   def show
-    set_reservation
+    render json: @reservation, status: :ok
   end
 
   # GET /reservations/new
@@ -24,39 +25,32 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/1/edit
   def edit
-    set_reservation
+    render json: @reservation, status: :ok
   end
 
   # POST /reservations or /reservations.json
   def create
-    set_reservation
-    @reservation = Reservation.new(reservation_params.merge(user: @user))
-    @reservation.user_id = current_user.id
+    @reservation = Reservation.new(reservation_params)
+    # @reservation = @user.reservations.new(reservation_params)
 
-    respond_to do |format|
-      if @reservation.save
-        format.json { render :show, status: :created, location: @reservation }
-      else
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if @reservation.save
+      render json: @reservation, status: :created
+    else
+      render json: @reservation.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /reservations/1 or /reservations/1.json
   def update
-    set_reservation
-    respond_to do |format|
-      if @reservation.update(reservation_params)
-        format.json { render :show, status: :ok, location: @reservation }
-      else
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if @reservation.update(reservation_params)
+      render json: @reservation, status: :ok
+    else
+      render json: @reservation.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /reservations/1 or /reservations/1.json
   def destroy
-    set_reservation
     @reservation.destroy
 
     respond_to do |format|
@@ -68,11 +62,14 @@ class Api::V1::ReservationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_reservation
-    @reservation = @user.reservations.find(params[:id])
+    @reservation = Reservation.find_by_id!(params[:id])
+    # @reservation = @user.reservations.find_by_id!(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: 'Reservation not found' }, status: :unauthorized
   end
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:city, :date)
+    params.require(:reservation).permit(:city, :date, :user_id)
   end
 end
