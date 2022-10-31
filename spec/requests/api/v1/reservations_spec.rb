@@ -7,20 +7,11 @@ RSpec.describe 'api/v1/reservations', type: :request do
         produces 'application/json'
         parameter name: :reservation, in: :body, schema: {
           type: :object,
-          properties: {
-            id: { type: :integer },
-            city: { type: :string },
-            date: { type: :string },
-            user_id: { type: :integer },
-            motorcycle_id: { type: :integer },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[city date]
+          properties: { id: { type: :integer }, city: { type: :string }, date: { type: :string },
+                        user_id: { type: :integer }, motorcycle_id: { type: :integer }, created_at: { type: :string },
+                        updated_at: { type: :string } }, required: %w[city date]
         }
-
         let(:id) { Reservation.create(city: 'Gondar', date: '09-09-2022').id }
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -62,20 +53,11 @@ RSpec.describe 'api/v1/reservations', type: :request do
         produces 'application/json'
         parameter name: :reservation, in: :body, schema: {
           type: :object,
-          properties: {
-            id: { type: :integer },
-            city: { type: :string },
-            date: { type: :string },
-            user_id: { type: :integer },
-            motorcycle_id: { type: :integer },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[city date]
+          properties: { id: { type: :integer }, city: { type: :string },
+                        date: { type: :string }, user_id: { type: :integer }, motorcycle_id: { type: :integer },
+                        created_at: { type: :string }, updated_at: { type: :string } }, required: %w[city date]
         }
-
         let(:id) { Reservation.create(city: 'Gondar', date: '09-09-2022').id }
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -92,20 +74,11 @@ RSpec.describe 'api/v1/reservations', type: :request do
         produces 'application/json'
         parameter name: :reservation, in: :body, schema: {
           type: :object,
-          properties: {
-            id: { type: :integer },
-            city: { type: :string },
-            date: { type: :string },
-            user_id: { type: :integer },
-            motorcycle_id: { type: :integer },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[city date]
+          properties: { id: { type: :integer }, city: { type: :string },
+                        date: { type: :string }, user_id: { type: :integer }, motorcycle_id: { type: :integer },
+                        created_at: { type: :string }, updated_at: { type: :string } }, required: %w[city date]
         }
-
         let(:id) { Reservation.create(city: 'Gondar', date: '09-09-2022').id }
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -122,20 +95,11 @@ RSpec.describe 'api/v1/reservations', type: :request do
         produces 'application/json'
         parameter name: :reservation, in: :body, schema: {
           type: :object,
-          properties: {
-            id: { type: :integer },
-            city: { type: :string },
-            date: { type: :string },
-            user_id: { type: :integer },
-            motorcycle_id: { type: :integer },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[city date]
+          properties: { id: { type: :integer }, city: { type: :string },
+                        date: { type: :string }, user_id: { type: :integer }, motorcycle_id: { type: :integer },
+                        created_at: { type: :string }, updated_at: { type: :string } }, required: %w[city date]
         }
-
         let(:id) { Reservation.create(city: 'Gondar', date: '09-09-2022').id }
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -152,20 +116,10 @@ RSpec.describe 'api/v1/reservations', type: :request do
         produces 'application/json'
         parameter name: :reservation, in: :body, schema: {
           type: :object,
-          properties: {
-            id: { type: :integer },
-            city: { type: :string },
-            date: { type: :string },
-            user_id: { type: :integer },
-            motorcycle_id: { type: :integer },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[city date]
+          properties: { id: { type: :integer }, city: { type: :string }, date: { type: :string },
+                        user_id: { type: :integer }, motorcycle_id: { type: :integer }, created_at: { type: :string }, updated_at: { type: :string } }, required: %w[city date]
         }
-
         let(:id) { create(:reservation).id }
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {

@@ -6,12 +6,8 @@ RSpec.describe 'api/v1/users', type: :request do
       response(200, 'successful') do
         consumes 'application/json'
         parameter name: :user, in: :body, schema: {
-          type: :object,
-          properties: {
-            name: { type: :string },
-            password: { type: :string }
-          },
-          required: %w[name password]
+          type: :object, properties: { name: { type: :string },
+                                       password: { type: :string } }, required: %w[name password]
         }
 
         after do |example|

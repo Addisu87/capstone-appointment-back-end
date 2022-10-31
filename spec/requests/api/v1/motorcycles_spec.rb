@@ -6,16 +6,7 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
       response(200, 'successful') do
         produces 'application/json'
         parameter name: :motorcycle, in: :body, schema: {
-          type: :object,
-          properties: {
-            id: { type: :integer },
-            model: { type: :string },
-            duration: { type: :integer },
-            price: { type: :integer },
-            description: { type: :text },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
+          type: :object, properties: { id: { type: :integer }, model: { type: :string }, duration: { type: :integer }, price: { type: :integer }, description: { type: :text }, created_at: { type: :string }, updated_at: { type: :string } },
           required: %w[model price]
         }
 
@@ -36,13 +27,7 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
       response(200, 'successful') do
         consumes 'application/json'
         parameter name: :motorcycle, in: :body, schema: {
-          type: :object,
-          properties: {
-            model: { type: :string },
-            duration: { type: :integer },
-            price: { type: :integer },
-            description: { type: :text }
-          },
+          type: :object, properties: { model: { type: :string }, duration: { type: :integer }, price: { type: :integer }, description: { type: :text } },
           required: %w[model price]
         }
 
@@ -63,17 +48,8 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
       response(200, 'successful') do
         produces 'application/json'
         parameter name: :motorcycle, in: :body, schema: {
-          type: :object,
-          properties: {
-            id: { type: :integer },
-            model: { type: :string },
-            duration: { type: :integer },
-            price: { type: :integer },
-            description: { type: :text },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[model price]
+          type: :object, properties: { id: { type: :integer }, model: { type: :string }, duration: { type: :integer },
+                                       price: { type: :integer }, description: { type: :text }, created_at: { type: :string }, updated_at: { type: :string } }, required: %w[model price]
         }
 
         let(:id) { Motorcycle.create(model: 'foo', price: 100).id }
@@ -95,15 +71,9 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
         parameter name: :motorcycle, in: :body, schema: {
           type: :object,
           properties: {
-            id: { type: :integer },
-            model: { type: :string },
-            duration: { type: :integer },
-            price: { type: :integer },
-            description: { type: :text },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[model price]
+            id: { type: :integer }, model: { type: :string }, duration: { type: :integer }, price: { type: :integer }, description: { type: :text },
+            created_at: { type: :string }, updated_at: { type: :string }
+          }, required: %w[model price]
         }
 
         let(:id) { Motorcycle.create(model: 'foo', price: 100).id }
@@ -124,16 +94,8 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
         produces 'application/json'
         parameter name: :motorcycle, in: :body, schema: {
           type: :object,
-          properties: {
-            id: { type: :integer },
-            model: { type: :string },
-            duration: { type: :integer },
-            price: { type: :integer },
-            description: { type: :text },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[model price]
+          properties: { id: { type: :integer }, model: { type: :string },
+                        duration: { type: :integer }, price: { type: :integer }, description: { type: :text }, created_at: { type: :string }, updated_at: { type: :string } }, required: %w[model price]
         }
 
         let(:id) { Motorcycle.create(model: 'foo', price: 100).id }
@@ -154,16 +116,7 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
         produces 'application/json'
         parameter name: :motorcycle, in: :body, schema: {
           type: :object,
-          properties: {
-            id: { type: :integer },
-            model: { type: :string },
-            duration: { type: :integer },
-            price: { type: :integer },
-            description: { type: :text },
-            created_at: { type: :string },
-            updated_at: { type: :string }
-          },
-          required: %w[model price]
+          properties: { id: { type: :integer }, model: { type: :string }, duration: { type: :integer }, price: { type: :integer }, description: { type: :text }, created_at: { type: :string }, updated_at: { type: :string } }, required: %w[model price]
         }
 
         let(:id) { create(:motorcycle).id }

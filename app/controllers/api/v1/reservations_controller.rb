@@ -1,13 +1,12 @@
 class Api::V1::ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[show update destroy]
+  skip_before_action :set_reservation, only: %i[show edit update destroy]
 
   # GET /reservations or /reservations.json
   def index
     @reservations = Reservation.all.includes(:motorcycle)
-    # @reservations = @user.reservations
 
     if @reservations.size.positive?
-      render json: @reservations, status: :ok
+      render json: @reservations, include: [:motorcycle], status: :ok
     else
       render json: { errors: 'Reservations not found' }, status: :not_found
     end
@@ -30,13 +29,16 @@ class Api::V1::ReservationsController < ApplicationController
 
   # POST /reservations or /reservations.json
   def create
-    @reservation = Reservation.new(reservation_params)
-    # @reservation = @user.reservations.new(reservation_params)
+    set_reservation
+    @reservation = Reservation.new(reservation_params.merge(user: @user))
+    @reservation.user_id = current_user.id
 
-    if @reservation.save
-      render json: @reservation, status: :created
-    else
-      render json: @reservation.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if @reservation.save
+        format.json { render :show, status: :created, location: @reservation }
+      else
+        format.json { render json: @reservation.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -62,14 +64,14 @@ class Api::V1::ReservationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_reservation
-    @reservation = Reservation.find_by_id!(params[:id])
-    # @reservation = @user.reservations.find_by_id!(params[:id])
+    # @reservation = Reservation.find_by_id!(params[:id])
+    @reservation = @user.reservations.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: { errors: 'Reservation not found' }, status: :unauthorized
   end
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:city, :date, :user_id)
+    params.require(:reservation).permit(:city, :date)
   end
 end
