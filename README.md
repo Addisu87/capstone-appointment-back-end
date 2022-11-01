@@ -1,16 +1,17 @@
 # Capstone_Appointment_back_end
 
-> This application is developed using Ruby on Rails(RoR) CRUD capabilities. It allows users to create motorcycles and appointments to purchase and post them in a web interface. This app uses RoR, RSPec, Capybara, Devise, and CanCanCan.
+> This application is developed using Ruby on Rails(RoR) CRUD capabilities. It allows users to create motorcycles and appointments to purchase and post them in a web interface.
 
 ## Built With
 
 - Ruby On Rails (RoR)
 - PostegreSQL
 - RSpec
-- Capybara
-- Devise
-- CanCanCan
-- Bullet
+- Rswag
+- jwt
+- Bcrypt
+- rack-cors and
+- image-processing
 
 ## Live Demo (if available)
 
@@ -25,7 +26,6 @@ To get a local copy up and running follow these simple example steps.
 - Ruby 3.1.2 or newer
 - Rails 7.0.4 or newer
 - Git
-- NPM
 - PostgreSQL
 - Modern web browser
 
@@ -37,7 +37,6 @@ cd capstone-appointment-back-end/
 ### Install
 
 bundle install
-npm install
 
 ### Usage
 
