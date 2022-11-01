@@ -1,4 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :name
-  has_many :motorcycles, :reservations
+  has_many :motorcycles
+  has_many :reservations
 end
