@@ -31,7 +31,6 @@ class Api::V1::ReservationsController < ApplicationController
   def create
     @user = User.find(reservation_params[:user_id])
     @reservation = Reservation.new(reservation_params)
-    
     if @reservation.save
       p 'Reservation saved'
       render json: @reservation, status: :created

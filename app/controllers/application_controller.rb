@@ -7,12 +7,11 @@ class ApplicationController < ActionController::API
     header = request.headers['Authorization']
     token = header.split.last if header
     begin
-      user_id = JWT.decode(token, 'secret', true, algorithm: 'HS256')
+      JWT.decode(token, 'secret', true, algorithm: 'HS256')
     rescue JWT::DecodeError
       nil
     end
   end
-  
 
   # def current_user
   #   return unless decoded_token
