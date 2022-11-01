@@ -6,7 +6,8 @@ class Api::V1::SessionsController < ApplicationController
     # @user.authenticate('password')
     if @user&.authenticate(session_params[:password])
       @token = encode_token({ user_id: @user.id })
-      render json: { user: UserSerializer.new(@user), jwt: @token }, status: :accepted
+      render json: { user: UserSerializer.new(@user).serializable_hash.to_json
+        , jwt: @token }, status: :accepted
     else
       render json: { message: 'Invalid username or password' }, status: :unauthorized
     end
