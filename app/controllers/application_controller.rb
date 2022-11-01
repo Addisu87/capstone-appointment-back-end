@@ -12,6 +12,7 @@ class ApplicationController < ActionController::API
       nil
     end
   end
+  
 
   def current_user
     return unless decoded_token

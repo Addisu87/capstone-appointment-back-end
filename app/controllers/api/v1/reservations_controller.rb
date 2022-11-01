@@ -1,5 +1,6 @@
 class Api::V1::ReservationsController < ApplicationController
-  skip_before_action :find_reservation, only: %i[show edit update destroy]
+  # skip_before_action :find_reservation, only: %i[show edit update destroy]
+  before_action :authorize_request
 
   # GET /reservations or /reservations.json
   def index
@@ -29,16 +30,13 @@ class Api::V1::ReservationsController < ApplicationController
 
   # POST /reservations or /reservations.json
   def create
-    set_reservation
-    @reservation = Reservation.new(reservation_params.merge(user: @user))
-    @reservation.user_id = current_user.id
-
-    respond_to do |format|
-      if @reservation.save
-        format.json { render :show, status: :created, location: @reservation }
-      else
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    @user = User.find_by(id: reservation_params.user_id)
+    @reservation = Reservation.new(reservation_params)
+    
+    if @reservation.save
+      render json: @reservation, status: :created, location: @reservation
+    else
+      render json: @reservation.errors, status: :unprocessable_entity
     end
   end
 
@@ -73,6 +71,6 @@ class Api::V1::ReservationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:city, :date)
+    params.require(:reservation).permit(:city, :date, :user_id, :motorcycle_id)
   end
 end
