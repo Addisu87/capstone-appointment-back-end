@@ -1,5 +1,5 @@
-class MotorcycleSerializer < ActiveModel::Serializer
-  include JSONAPI::Serializer
-  attributes :id, :model
-  belongs_to :user, serializer: MotorcycleSerializer
+class MotorcycleSerializer
+  include FastJsonapi::ObjectSerializer
+  attributes :id, :model, :duration, :price, :description
+  belongs_to :user
 end
