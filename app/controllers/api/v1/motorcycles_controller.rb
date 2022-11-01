@@ -1,10 +1,6 @@
 class Api::V1::MotorcyclesController < ApplicationController
-  before_action :set_motorcycle, only: %i[show update destroy]
-  before_action :authorize_request, except: :create
-
   # GET /motorcycles or /motorcycles.json
   def index
-    # @motorcycles = @user.motorcycles.all
     @motorcycles = []
     Motorcycle.all.each do |motor|
       @motorcycles.push(motor.as_json.merge({ avatar: url_for(motor.avatar) }))
@@ -38,15 +34,11 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # POST /motorcycles or /motorcycles.json
   def create
-    p 'These are the params'
-    p motorcycle_params
-    @motorcycle = Motorcycle.new(motorcycle_params.except(:motorcycle))
+    @motorcycle = Motorcycle.new(motorcycle_params)
     if @motorcycle.save
-      p 'Motorcycle saved'
       render json: @motorcycle, status: :created
     else
       render json: @motorcycle.errors, status: :unprocessable_entity
-      p 'Failed to save Motocycle'
     end
   end
 
@@ -73,7 +65,7 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_motorcycle
-    @motorcycle = Motorcycle.find(params[:id])
+    @motorcycle = Motorcycle.find_by_id!(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
