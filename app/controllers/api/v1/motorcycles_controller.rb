@@ -36,9 +36,6 @@ class Api::V1::MotorcyclesController < ApplicationController
   # POST /motorcycles or /motorcycles.json
   def create
     @user_id =  authorize_request();
-    p 'Gotten User Id Through token'
-    p @user_id
-
     if @user_id.nil?
       render json: {error: 'User token is not provided'}, status: :unauthorized
     else
