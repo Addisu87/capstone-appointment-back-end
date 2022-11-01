@@ -1,9 +1,5 @@
 class Api::V1::ReservationsController < ApplicationController
-<<<<<<< HEAD
-  # skip_before_action :find_reservation, only: %i[show edit update destroy]
-=======
   before_action :set_reservation, only: %i[show update destroy]
->>>>>>> 0859e27b108f7c8ae8c1e43ba731a483dcd9be54
   before_action :authorize_request
 
   # GET /reservations or /reservations.json
@@ -73,10 +69,6 @@ class Api::V1::ReservationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-<<<<<<< HEAD
-    params.require(:reservation).permit(:city, :date, :user_id, :motorcycle_id)
-=======
     params.require(:reservation).permit(:city, :date, :motorcycle_id)
->>>>>>> 0859e27b108f7c8ae8c1e43ba731a483dcd9be54
   end
 end
