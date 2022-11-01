@@ -4,8 +4,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations or /reservations.json
   def index
-    @reservations = Reservation.all
-
+    @reservations = Reservation.all.includes(:motorcycle, :user)
     if @reservations.size.positive?
       render json: @reservations, status: :ok
     else
