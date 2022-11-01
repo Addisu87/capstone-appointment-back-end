@@ -6,6 +6,11 @@ class ApplicationController < ActionController::API
     JWT.encode(payload, SECRET_KEY)
   end
 
+  def decode(token)
+    decoded = JWT.decode(token, SECRET_KEY)[0]
+    HashWithIndifferentAccess.new decoded
+  end
+
   def not_found
     render json: { error: 'not_found' }
   end
@@ -16,7 +21,7 @@ class ApplicationController < ActionController::API
     header = header.split.last if header
     # headers: { 'Authorization': 'Bearer <token>' }
     begin
-      @decoded = JWT.decode(header)
+      @decoded = decode(header)
       @current_user = User.find(@decoded[:user_id])
     rescue ActiveRecord::RecordNotFound || JWT::DecodeError => e
       render json: { errors: e.message }, status: :unauthorized
