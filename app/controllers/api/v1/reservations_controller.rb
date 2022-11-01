@@ -5,7 +5,6 @@ class Api::V1::ReservationsController < ApplicationController
   # GET /reservations or /reservations.json
   def index
     @reservations = Reservation.all.includes(:motorcycle)
-
     if @reservations.size.positive?
       render json: @reservations, include: [:motorcycle], status: :ok
     else
@@ -31,7 +30,6 @@ class Api::V1::ReservationsController < ApplicationController
   # POST /reservations or /reservations.json
   def create
     @user = User.find(reservation_params[:user_id])
-    p reservation_params[:user_id]
     @reservation = Reservation.new(reservation_params)
     
     if @reservation.save
