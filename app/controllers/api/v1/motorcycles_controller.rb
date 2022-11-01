@@ -1,5 +1,6 @@
 class Api::V1::MotorcyclesController < ApplicationController
   # GET /motorcycles or /motorcycles.json
+  before_action :authorize_request
   def index
     @motorcycles = []
     Motorcycle.all.each do |motor|
@@ -34,7 +35,11 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # POST /motorcycles or /motorcycles.json
   def create
+    @user_id =  decode(@request.headers['Authorization'].split(' ')[1]);
+    p 'Gotten User Id Through token'
+    motorcycle_params[:user_id] = @user_id
     @motorcycle = Motorcycle.new(motorcycle_params)
+    
     if @motorcycle.save
       render json: @motorcycle, status: :created
     else
