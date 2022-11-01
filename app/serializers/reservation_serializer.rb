@@ -1,5 +1,4 @@
 class ReservationSerializer < ActiveModel::Serializer
-  attributes :id,:city,:date
-  belongs_to :user
-  belongs_to :motorcycle
+  attributes :id, :city, :date
+  belongs_to :user, :motorcycle
 end

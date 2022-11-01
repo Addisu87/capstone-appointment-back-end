@@ -27,7 +27,6 @@ class ApplicationController < ActionController::API
       render json: { errors: e.message }, status: :unauthorized
     end
   end
-  
 
   def logged_in?
     !!current_user
