@@ -45,14 +45,14 @@ gem 'jwt'
 gem 'active_model_serializers', '~> 0.10.13'
 
 # API documentation
+gem 'database_cleaner'
+gem 'rspec-rails'
 gem 'rswag'
+gem 'rswag-specs'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'database_cleaner'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem 'rspec-rails'
-  gem 'rswag-specs'
 end
 
 group :development do

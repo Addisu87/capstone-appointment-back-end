@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  SECRET_KEY = Rails.application.secrets.secret_key_base.to_s
+  SECRET_KEY = 'secret-key'.freeze
   def encode_token(payload, exp: 24.days.from_now)
     payload[:exp] = exp.to_i
     # should store secret in env variable
