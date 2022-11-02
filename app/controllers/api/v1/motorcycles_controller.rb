@@ -1,5 +1,6 @@
 class Api::V1::MotorcyclesController < ApplicationController
   # GET /motorcycles or /motorcycles.json
+  before_action :authorize_request
   def index
     @motorcycles = []
     Motorcycle.all.each do |motor|
@@ -34,11 +35,17 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # POST /motorcycles or /motorcycles.json
   def create
-    @motorcycle = Motorcycle.new(motorcycle_params)
-    if @motorcycle.save
-      render json: @motorcycle, status: :created
+    @user_id = authorize_request
+    if @user_id.nil?
+      render json: { error: 'User token is not provided' }, status: :unauthorized
     else
-      render json: @motorcycle.errors, status: :unprocessable_entity
+      @motorcycle = Motorcycle.new(motorcycle_params)
+      @motorcycle.user = @user_id
+      if @motorcycle.save
+        render json: @motorcycle, status: :created
+      else
+        render json: @motorcycle.errors, status: :unprocessable_entity
+      end
     end
   end
 

@@ -1,6 +1,7 @@
 class Motorcycle < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_one_attached :image
+  belongs_to :user
 
   # addiing validation for attributes
   validates :model, presence: true
