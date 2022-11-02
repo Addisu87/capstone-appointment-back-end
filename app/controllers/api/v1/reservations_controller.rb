@@ -4,11 +4,16 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations or /reservations.json
   def index
-    @reservations = Reservation.all.includes(:motorcycle, :user)
-    if @reservations.size.positive?
-      render json: @reservations, status: :ok
+    @user_id = authorize_request
+    if @user_id.nil?
+      render json: { error: 'User token is not provided' }, status: :unauthorized
     else
-      render json: { errors: 'Reservations not found' }, status: :not_found
+      @reservations = Reservation.where(user: @user_id).includes(:motorcycle, :user)
+      if @reservations.size.positive?
+        render json: @reservations, status: :ok
+      else
+        render json: { errors: 'Reservations not found' }, status: :not_found
+      end
     end
   end
 
