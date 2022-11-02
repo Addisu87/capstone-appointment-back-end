@@ -31,6 +31,8 @@ paths:
                   type: integer
                 description:
                   type: text
+                avatar:
+                  type: string
               required:
               - model
               - price
