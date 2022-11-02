@@ -13,6 +13,7 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
             duration: { type: :integer },
             price: { type: :integer },
             description: { type: :text },
+            avatar: { type: :string },
             created_at: { type: :string },
             updated_at: { type: :string }
           },
@@ -41,7 +42,8 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
             model: { type: :string },
             duration: { type: :integer },
             price: { type: :integer },
-            description: { type: :text }
+            description: { type: :text },
+            avatar: { type: :string }
           },
           required: %w[model price]
         }
@@ -70,6 +72,7 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
             duration: { type: :integer },
             price: { type: :integer },
             description: { type: :text },
+            avatar: { type: :string },
             created_at: { type: :string },
             updated_at: { type: :string }
           },
@@ -100,6 +103,7 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
             duration: { type: :integer },
             price: { type: :integer },
             description: { type: :text },
+            avatar: { type: :string },
             created_at: { type: :string },
             updated_at: { type: :string }
           },
@@ -130,6 +134,7 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
             duration: { type: :integer },
             price: { type: :integer },
             description: { type: :text },
+            avatar: { type: :string },
             created_at: { type: :string },
             updated_at: { type: :string }
           },
@@ -160,6 +165,7 @@ RSpec.describe 'api/v1/motorcycles', type: :request do
             duration: { type: :integer },
             price: { type: :integer },
             description: { type: :text },
+            avatar: { type: :string },
             created_at: { type: :string },
             updated_at: { type: :string }
           },
