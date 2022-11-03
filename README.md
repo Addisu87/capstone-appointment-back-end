@@ -16,9 +16,10 @@
 ## Live Demo (if available)
 
 [Live Demo Link]()
-[API Documentation](https://motocycle-booking.herokuapp.com/api-docs/)
 [Front-end link](https://final-capstone-project-udqc.vercel.app/splash_page)
- 
+[API Documentation link](https://motocycle-booking.herokuapp.com/api-docs/)
+![API Documentation screenshot](/assets/images/API-documentations.png)
+
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
@@ -38,28 +39,25 @@ cd capstone-appointment-back-end/
 
 ### Install
 
-bundle install
-
-### Usage
+- bundle install
 
 #### Create the database
 
-rails db:create
+- rails db:create
 
 #### Generate Schema
 
-- To push the migration into the database
-  rails db:migrate
-- To push the seed into the database
-  rails db:seed
+- rails db:migrate
+- rails db:seed
 
 #### Starting up the web-server
 
-rails server
+- rails server
 
 ### Testing
 
-rspec --format documentation
+- rspec spec/models --format documentation
+- rake rswag
 
 ### Deployment
 
