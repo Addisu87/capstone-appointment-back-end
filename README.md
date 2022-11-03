@@ -17,7 +17,8 @@
 
 [Live Demo Link]()
 [API Documentation](https://motocycle-booking.herokuapp.com/api-docs/)
-
+[Front-end link](https://final-capstone-project-udqc.vercel.app/splash_page)
+ 
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
