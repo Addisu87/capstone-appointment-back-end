@@ -34,8 +34,8 @@ To get a local copy up and running follow these simple example steps.
 
 ### Setup
 
-git clone git@github.com:Addisu87/capstone-appointment-back-end.git
-cd capstone-appointment-back-end/
+- git clone git@github.com:Addisu87/capstone-appointment-back-end.git
+- cd capstone-appointment-back-end/
 
 ### Install
 
@@ -87,7 +87,7 @@ Heroku
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](../../issues/).
+Feel free to check the [issues page](https://github.com/Addisu87/capstone-appointment-back-end/issues).
 
 ## Show your support
 
