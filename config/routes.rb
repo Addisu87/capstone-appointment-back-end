@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  devise_for :users
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   namespace :api do
     namespace :v1 do
+      resources :users, only:[:create]
+      post '/create', to: 'users#create'
+      post '/login', to: 'users#login'
       resources :motorcycles
       resources :reservations
     end
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 end

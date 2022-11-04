@@ -1,16 +1,26 @@
 class Api::V1::MotorcyclesController < ApplicationController
-  before_action :set_motorcycle, only: %i[show edit update destroy]
-  before_action :authenticate_user!
-  load_and_authorize_resource
-
   # GET /motorcycles or /motorcycles.json
+  before_action :authorize_request
   def index
-    @motorcycles = Motorcycle.where(user_id: current_user.id).order(created_at: :desc)
+    @motorcycles = []
+    Motorcycle.all.each do |motor|
+      @motorcycles.push(motor.as_json.merge({ avatar: url_for(motor.avatar) }))
+    end
+
+    if @motorcycles.size.positive?
+      render json: @motorcycles
+    else
+      render json: { errors: 'Motorcycles not found' }, status: :not_found
+    end
   end
 
   # GET /motorcycles/1 or /motorcycles/1.json
   def show
-    set_motorcycle
+    @result = []
+    @motorcycle = Motorcycle.find(params[:id])
+    @result.push(@motorcycle.as_json.merge({ avatar: url_for(@motorcycle.avatar) }))
+
+    render json: @result
   end
 
   # GET /motorcycles/new
@@ -25,31 +35,26 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # POST /motorcycles or /motorcycles.json
   def create
-    @motorcycle = Motorcycle.new(motorcycle_params)
-    @motorcycle.user_id = current_user.id
-
-    respond_to do |format|
+    @user_id = authorize_request
+    if @user_id.nil?
+      render json: { error: 'User token is not provided' }, status: :unauthorized
+    else
+      @motorcycle = Motorcycle.new(motorcycle_params)
+      @motorcycle.user = @user_id
       if @motorcycle.save
-        format.html { redirect_to api_v1_motorcycles_url(@motorcycle), notice: 'Motorcycle was successfully created.' }
-        format.json { render :show, status: :created, location: @motorcycle }
+        render json: @motorcycle, status: :created
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @motorcycle.errors, status: :unprocessable_entity }
+        render json: @motorcycle.errors, status: :unprocessable_entity
       end
     end
   end
 
   # PATCH/PUT /motorcycles/1 or /motorcycles/1.json
   def update
-    set_motorcycle
-    respond_to do |format|
-      if @motorcycle.update(motorcycle_params)
-        format.html { redirect_to api_v1_motorcycle_url(@motorcycle), notice: 'Motorcycle was successfully updated.' }
-        format.json { render :show, status: :ok, location: @motorcycle }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @motorcycle.errors, status: :unprocessable_entity }
-      end
+    if @motorcycle.update(motorcycle_params)
+      render json: @motorcycle
+    else
+      render json: @motorcycle.errors, status: :unprocessable_entity
     end
   end
 
@@ -59,7 +64,6 @@ class Api::V1::MotorcyclesController < ApplicationController
     @motorcycle.destroy
 
     respond_to do |format|
-      format.html { redirect_to api_v1_motorcycle_url, notice: 'Motorcycle was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -68,11 +72,11 @@ class Api::V1::MotorcyclesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_motorcycle
-    @motorcycle = Motorcycle.find(params[:id])
+    @motorcycle = Motorcycle.find_by_id!(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def motorcycle_params
-    params.require(:motorcycle).permit(:model, :duration, :description, :price)
+    params.require(:motorcycle).permit(:model, :duration, :description, :price, :avatar)
   end
 end

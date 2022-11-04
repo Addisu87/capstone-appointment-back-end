@@ -1,20 +1,24 @@
 # Capstone_Appointment_back_end
 
-> This application is developed using Ruby on Rails(RoR) CRUD capabilities. It allows users to create motorcycles and appointments to purchase and post them in a web interface. This app uses RoR, RSPec, Capybara, Devise, and CanCanCan.
+> This application is developed using Ruby on Rails(RoR) CRUD capabilities. It allows users to create motorcycles and appointments to purchase and post them in a web interface.
 
 ## Built With
 
 - Ruby On Rails (RoR)
 - PostegreSQL
 - RSpec
-- Capybara
-- Devise
-- CanCanCan
-- Bullet
+- Rswag
+- jwt
+- Bcrypt
+- rack-cors and
+- image-processing
 
 ## Live Demo (if available)
 
 [Live Demo Link]()
+[Front-end link](https://final-capstone-project-udqc.vercel.app/splash_page)
+[API Documentation link](https://motocycle-booking.herokuapp.com/api-docs/)
+![API Documentation screenshot](/assets/images/API-documentations.png)
 
 ## Getting Started
 
@@ -25,40 +29,35 @@ To get a local copy up and running follow these simple example steps.
 - Ruby 3.1.2 or newer
 - Rails 7.0.4 or newer
 - Git
-- NPM
 - PostgreSQL
 - Modern web browser
 
 ### Setup
 
-git clone git@github.com:Addisu87/capstone-appointment-back-end.git
-cd capstone-appointment-back-end/
+- git clone git@github.com:Addisu87/capstone-appointment-back-end.git
+- cd capstone-appointment-back-end/
 
 ### Install
 
-bundle install
-npm install
-
-### Usage
+- bundle install
 
 #### Create the database
 
-rails db:create
+- rails db:create
 
 #### Generate Schema
 
-- To push the migration into the database
-  rails db:migrate
-- To push the seed into the database
-  rails db:seed
+- rails db:migrate
+- rails db:seed
 
 #### Starting up the web-server
 
-rails server
+- rails server
 
 ### Testing
 
-rspec --format documentation
+- rspec spec/models --format documentation
+- rake rswag
 
 ### Deployment
 
@@ -88,7 +87,7 @@ Heroku
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](../../issues/).
+Feel free to check the [issues page](https://github.com/Addisu87/capstone-appointment-back-end/issues).
 
 ## Show your support
 

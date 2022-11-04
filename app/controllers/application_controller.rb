@@ -1,15 +1,38 @@
 class ApplicationController < ActionController::API
-  before_action :update_allowed_parameters, if: :devise_controller?
-
-  # Catch all CanCan errors and alert the user of the exception
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, alert: exception.message
+  SECRET_KEY = 'secret-key'.freeze
+  def encode_token(payload, exp: 24.days.from_now)
+    payload[:exp] = exp.to_i
+    # should store secret in env variable
+    JWT.encode(payload, SECRET_KEY)
   end
 
-  protected
+  def decode(token)
+    decoded = JWT.decode(token, SECRET_KEY)[0]
+    HashWithIndifferentAccess.new decoded
+  end
 
-  def update_allowed_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:name])
+  def not_found
+    render json: { error: 'not_found' }
+  end
+
+  def authorize_request
+    # { 'Authorization': 'Bearer <token>' }
+    header = request.headers['Authorization']
+    token = header.split.last if header
+    # headers: { 'Authorization': 'Bearer <token>' }
+    begin
+      @decoded = decode(token)
+      @current_user = User.find(@decoded[:user_id])
+    rescue ActiveRecord::RecordNotFound || JWT::DecodeError => e
+      render json: { errors: e.message }, status: :unauthorized
+    end
+  end
+
+  def logged_in?
+    !!current_user
+  end
+
+  def authorized
+    render json: { message: 'You have to log in.' }, status: :unauthorized unless logged_in?
   end
 end

@@ -17,6 +17,8 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  # username: postgres
+  # password: 1234
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -24,24 +26,28 @@ default: &default
 development:
   <<: *default
   database: capstone_appointment_back_end_development
+  username: postgres
+  password: 1987
+  host: localhost
+  port: 1987
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  username: postgres
+  # username: postgres
 
   # The password associated with the postgres role (username).
-  password: 1987
+  # password: 1987
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  host: localhost
+  # host: localhost
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
-  port: 1987
+  # port: 1987
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public

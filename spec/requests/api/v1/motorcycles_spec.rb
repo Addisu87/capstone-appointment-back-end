@@ -1,52 +1,188 @@
-require 'rails_helper'
+require 'swagger_helper'
 
-RSpec.describe 'Api::V1::Motorcycles', type: :request do
-  describe 'GET /index' do
-    it 'returns http success' do
-      get '/api/v1/motorcycles/index'
-      expect(response).to have_http_status(:success)
+RSpec.describe 'api/v1/motorcycles', type: :request do
+  path '/api/v1/motorcycles' do
+    get('list motorcycles') do
+      response(200, 'successful') do
+        produces 'application/json'
+        parameter name: :motorcycle, in: :body, schema: {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            model: { type: :string },
+            duration: { type: :integer },
+            price: { type: :integer },
+            description: { type: :text },
+            avatar: { type: :string },
+            created_at: { type: :string },
+            updated_at: { type: :string }
+          },
+          required: %w[model price]
+        }
+
+        let(:id) { Motorcycle.create(model: 'foo', price: 100).id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
+    end
+
+    post('create motorcycle') do
+      response(200, 'successful') do
+        consumes 'application/json'
+        parameter name: :motorcycle, in: :body, schema: {
+          type: :object,
+          properties: {
+            model: { type: :string },
+            duration: { type: :integer },
+            price: { type: :integer },
+            description: { type: :text },
+            avatar: { type: :string }
+          },
+          required: %w[model price]
+        }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
     end
   end
 
-  describe 'GET /new' do
-    it 'returns http success' do
-      get '/api/v1/motorcycles/new'
-      expect(response).to have_http_status(:success)
-    end
-  end
+  path '/api/v1/motorcycles/{id}' do
+    get('show motorcycle') do
+      response(200, 'successful') do
+        produces 'application/json'
+        parameter name: :motorcycle, in: :body, schema: {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            model: { type: :string },
+            duration: { type: :integer },
+            price: { type: :integer },
+            description: { type: :text },
+            avatar: { type: :string },
+            created_at: { type: :string },
+            updated_at: { type: :string }
+          },
+          required: %w[model price]
+        }
 
-  describe 'GET /create' do
-    it 'returns http success' do
-      get '/api/v1/motorcycles/create'
-      expect(response).to have_http_status(:success)
-    end
-  end
+        let(:id) { Motorcycle.create(model: 'foo', price: 100).id }
 
-  describe 'GET /edit' do
-    it 'returns http success' do
-      get '/api/v1/motorcycles/edit'
-      expect(response).to have_http_status(:success)
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
     end
-  end
 
-  describe 'GET /show' do
-    it 'returns http success' do
-      get '/api/v1/motorcycles/show'
-      expect(response).to have_http_status(:success)
+    patch('update motorcycle') do
+      response(200, 'successful') do
+        produces 'application/json'
+        parameter name: :motorcycle, in: :body, schema: {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            model: { type: :string },
+            duration: { type: :integer },
+            price: { type: :integer },
+            description: { type: :text },
+            avatar: { type: :string },
+            created_at: { type: :string },
+            updated_at: { type: :string }
+          },
+          required: %w[model price]
+        }
+
+        let(:id) { Motorcycle.create(model: 'foo', price: 100).id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
     end
-  end
 
-  describe 'GET /update' do
-    it 'returns http success' do
-      get '/api/v1/motorcycles/update'
-      expect(response).to have_http_status(:success)
+    put('update motorcycle') do
+      response(200, 'successful') do
+        produces 'application/json'
+        parameter name: :motorcycle, in: :body, schema: {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            model: { type: :string },
+            duration: { type: :integer },
+            price: { type: :integer },
+            description: { type: :text },
+            avatar: { type: :string },
+            created_at: { type: :string },
+            updated_at: { type: :string }
+          },
+          required: %w[model price]
+        }
+
+        let(:id) { Motorcycle.create(model: 'foo', price: 100).id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
     end
-  end
 
-  describe 'GET /destroy' do
-    it 'returns http success' do
-      get '/api/v1/motorcycles/destroy'
-      expect(response).to have_http_status(:success)
+    delete('delete motorcycle') do
+      response(200, 'successful') do
+        produces 'application/json'
+        parameter name: :motorcycle, in: :body, schema: {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            model: { type: :string },
+            duration: { type: :integer },
+            price: { type: :integer },
+            description: { type: :text },
+            avatar: { type: :string },
+            created_at: { type: :string },
+            updated_at: { type: :string }
+          },
+          required: %w[model price]
+        }
+
+        let(:id) { create(:motorcycle).id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
     end
   end
 end

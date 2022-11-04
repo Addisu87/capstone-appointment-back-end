@@ -1,0 +1,167 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/motorcycles":
+    get:
+      summary: list motorcycles
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create motorcycle
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                duration:
+                  type: integer
+                price:
+                  type: integer
+                description:
+                  type: text
+                avatar:
+                  type: string
+              required:
+              - model
+              - price
+  "/api/v1/motorcycles/{id}":
+    get:
+      summary: show motorcycle
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update motorcycle
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update motorcycle
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete motorcycle
+      parameters: []
+      responses:
+        '200':
+          description: successful
+  "/api/v1/reservations":
+    get:
+      summary: list reservations
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create reservation
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: string
+                date:
+                  type: string
+              required:
+              - city
+              - date
+  "/api/v1/reservations/{id}":
+    get:
+      summary: show reservation
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update reservation
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update reservation
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete reservation
+      parameters: []
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users":
+    post:
+      summary: create user
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+              required:
+              - name
+              - password
+  "/api/v1/login":
+    get:
+      summary: login user
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                created_at:
+                  type: string
+                updated_at:
+                  type: string
+              required:
+              - name
+              - password
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000/
