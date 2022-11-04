@@ -19,6 +19,10 @@
 [Front-end link](https://final-capstone-project-udqc.vercel.app/splash_page)
 [API Documentation link](https://motocycle-booking.herokuapp.com/api-docs/)
 ![API Documentation screenshot](/assets/images/API-documentations.png)
+[Kanban board Link](https://github.com/users/Emmykage/projects/4/views/1)
+![Kanban board screenshot](/assets/images/kanban-board.png)
+
+- We have done this full-stack project as a group of three people(Addisu, Issac and Morris).
 
 ## Getting Started
 
